@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">CM_Workshop</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="btn_reset">Reset</string>
+    <string name="btn_ready">Ready</string>
 </resources>
