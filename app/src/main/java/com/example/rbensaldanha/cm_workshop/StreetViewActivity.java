@@ -27,8 +27,8 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_map);
 
-        btn_ready = findViewById(R.id.btn_ready);
-        btn_reset= findViewById(R.id.btn_reset);
+        btn_ready = (Button) findViewById(R.id.btn_ready);
+        btn_reset= (Button) findViewById(R.id.btn_reset);
 
         StreetViewPanoramaFragment streetViewPanoramaFragment = (StreetViewPanoramaFragment) getFragmentManager().findFragmentById(R.id.streetViewPanorama);
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(this);
@@ -48,7 +48,6 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
         locals.add(new LatLng(29.975117,31.137096));
 
         Random rand = new Random();
-
         int  n = rand.nextInt(locals.size());
         local = locals.get(n);
 
