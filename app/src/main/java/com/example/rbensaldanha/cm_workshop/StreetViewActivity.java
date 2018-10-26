@@ -17,9 +17,12 @@ import java.util.Random;
 
 public class StreetViewActivity extends FragmentActivity implements OnStreetViewPanoramaReadyCallback {
 
+    private static final String LOCAL_LAT="LATITUDE";
+    private static final String LOCAL_LONG="LONGITUDE";
+
     private ArrayList<LatLng> locals;
     private LatLng local;
-    private Button btn_ready, btn_reset;
+    private Button btn_ready, btn_reset, btn_retry;
     private StreetViewPanorama streetViewPanorama;
 
     @Override
@@ -28,7 +31,8 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
         setContentView(R.layout.content_map);
 
         btn_ready = (Button) findViewById(R.id.btn_ready);
-        btn_reset= (Button) findViewById(R.id.btn_reset);
+        btn_reset = (Button) findViewById(R.id.btn_reset);
+        btn_retry = (Button) findViewById(R.id.btn_retry);
 
         StreetViewPanoramaFragment streetViewPanoramaFragment = (StreetViewPanoramaFragment) getFragmentManager().findFragmentById(R.id.streetViewPanorama);
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(this);
@@ -42,14 +46,12 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
         locals.add(new LatLng(38.887735, -77.032689));
         //Close to Colosseum
         locals.add(new LatLng(41.889129, 12.495238));
-        //Close to Taj Mahal
-        locals.add(new LatLng(27.170496,78.040306));
+        //Close to Tokyo Tower
+        locals.add(new LatLng(35.659988, 139.744451));
         //Close to the Great Sphinx
         locals.add(new LatLng(29.975117,31.137096));
 
-        Random rand = new Random();
-        int  n = rand.nextInt(locals.size());
-        local = locals.get(n);
+        setLocation();
 
         btn_reset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,9 +64,25 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
             @Override
             public void onClick(View v) {
                 Intent mapActivity = new Intent(StreetViewActivity.this, MapsActivity.class);
+                mapActivity.putExtra("latitude",local.latitude);
+                mapActivity.putExtra("longitude",local.longitude);
                 startActivity(mapActivity);
             }
         });
+
+        btn_retry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLocation();
+                streetViewPanorama.setPosition(local);
+            }
+        });
+    }
+
+    private void setLocation(){
+        Random rand = new Random();
+        int  n = rand.nextInt(locals.size());
+        local = locals.get(n);
     }
 
     @Override

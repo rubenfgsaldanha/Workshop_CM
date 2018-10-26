@@ -5,33 +5,33 @@
     android:layout_height="match_parent">
 
     <include
-        layout="@layout/activity_maps"
+        layout="@layout/activity_maps2"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
     </include>
 
     <Button
-        android:id="@+id/btn_ready"
+        android:id="@+id/btn_normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/btn_ready"
+        android:text="@string/btn_normal"
         android:textAllCaps="false"/>
 
     <Button
-        android:id="@+id/btn_reset"
+        android:id="@+id/btn_satellite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="@string/btn_reset"
+        android:text="@string/btn_satellite"
         android:textAllCaps="false"/>
 
     <Button
-        android:id="@+id/btn_retry"
+        android:id="@+id/btn_terrain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_retry"
+        android:text="@string/btn_terrain"
         android:textAllCaps="false"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"/>
