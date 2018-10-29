@@ -17,8 +17,8 @@ import java.util.Random;
 
 public class StreetViewActivity extends FragmentActivity implements OnStreetViewPanoramaReadyCallback {
 
-    private static final String LOCAL_LAT="LATITUDE";
-    private static final String LOCAL_LONG="LONGITUDE";
+    //private static final String LOCAL_LAT="LATITUDE";
+    //private static final String LOCAL_LONG="LONGITUDE";
 
     private ArrayList<LatLng> locals;
     private LatLng local;

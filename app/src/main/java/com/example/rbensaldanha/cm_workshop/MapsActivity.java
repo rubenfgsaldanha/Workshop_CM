@@ -33,7 +33,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int MY_LOCATION_REQUEST_CODE = 1000;
     private static final float DEFAULT_ZOOM = 15f;
     private static final String TAG = "MapsActivity";
-    private static final int updates = 999999999;
+    private static final int updates = 1800000;     //30minutes
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -46,6 +46,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG,"I'm in onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_maps2);
 
@@ -64,6 +65,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //Checks permissions
     private void checkPermissions(){
+        Log.i(TAG,"I'm in checkPermissions");
         if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, MY_LOCATION_REQUEST_CODE);
         }
@@ -74,7 +76,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //initializes map
     private void initMap(){
-        Log.d(TAG, "initMap: initializing map");
+        Log.i(TAG, "initMap: initializing map");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -174,14 +176,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //gets updates on the location
     @SuppressLint("MissingPermission")
     private void locationUpdates(){
-        Log.d(TAG, "getDeviceLocation: getting the device's current location");
+        Log.d(TAG, "getting the device's current location");
 
         locationRequest = LocationRequest.create().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY).setInterval(updates);
 
         mFusedLocationProviderClient.requestLocationUpdates(locationRequest,locationCallback,null).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e("FUSED LOCATION PROVIDER", e.getMessage());
+                Log.e("FusedLocationProvider**", e.getMessage());
             }
         });
     }
@@ -189,6 +191,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //handles the permission request(s)
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        Log.i(TAG,"I'm in onRequestPermissionsResult");
         if (requestCode == MY_LOCATION_REQUEST_CODE) {
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 initMap();
@@ -198,25 +201,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onDestroy() {
+        Log.i(TAG,"I'm in onDestroy");
         mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
         super.onDestroy();
     }
 
-    @Override
+    /*@Override
     protected void onPause() {
-        mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
         super.onPause();
+        Log.i(TAG,"I'm in onPause");
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        }
     }
 
-    @SuppressLint("MissingPermission")
     @Override
     protected void onResume() {
-        mFusedLocationProviderClient.requestLocationUpdates(locationRequest,locationCallback,null).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("FUSED LOCATION PROVIDER", e.getMessage());
-            }
-        });
         super.onResume();
-    }
+        Log.i(TAG,"I'm in onResume");
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+            LocationRequest mLocationRequest = LocationRequest.create().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY).setInterval(updates);
+            mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest,locationCallback,null).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("FusedLocationProvider--", e.getMessage());
+                }
+            });
+        }
+    }*/
 }
