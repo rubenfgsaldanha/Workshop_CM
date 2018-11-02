@@ -17,9 +17,6 @@ import java.util.Random;
 
 public class StreetViewActivity extends FragmentActivity implements OnStreetViewPanoramaReadyCallback {
 
-    //private static final String LOCAL_LAT="LATITUDE";
-    //private static final String LOCAL_LONG="LONGITUDE";
-
     private ArrayList<LatLng> locals;
     private LatLng local;
     private Button btn_ready, btn_reset, btn_retry;
@@ -41,6 +38,7 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
     }
 
     private void init(){
+        //4 places from different continents
         locals = new ArrayList<>();
         //Close to Washington Monument
         locals.add(new LatLng(38.887735, -77.032689));
@@ -64,6 +62,7 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
             @Override
             public void onClick(View v) {
                 Intent mapActivity = new Intent(StreetViewActivity.this, MapsActivity.class);
+                //sends coordinates to next activity
                 mapActivity.putExtra("latitude",local.latitude);
                 mapActivity.putExtra("longitude",local.longitude);
                 startActivity(mapActivity);
@@ -80,6 +79,7 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
     }
 
     private void setLocation(){
+        //chooses a random place from those 4
         Random rand = new Random();
         int  n = rand.nextInt(locals.size());
         local = locals.get(n);

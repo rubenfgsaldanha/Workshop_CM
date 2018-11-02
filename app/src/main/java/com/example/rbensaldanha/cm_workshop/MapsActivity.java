@@ -55,6 +55,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn_terrain = (Button)findViewById(R.id.btn_terrain);
 
         Intent intent = getIntent();
+        //get coordinates from previous activity
         double lat = intent.getDoubleExtra("latitude",0);
         double lon = intent.getDoubleExtra("longitude",0);
         chosenLocal = new LatLng(lat,lon);
@@ -205,29 +206,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
         super.onDestroy();
     }
-
-    /*@Override
-    protected void onPause() {
-        super.onPause();
-        Log.i(TAG,"I'm in onPause");
-        if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(TAG,"I'm in onResume");
-        if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-            LocationRequest mLocationRequest = LocationRequest.create().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY).setInterval(updates);
-            mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest,locationCallback,null).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.e("FusedLocationProvider--", e.getMessage());
-                }
-            });
-        }
-    }*/
 }
