@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -48,7 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG,"I'm in onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_maps2);
+        setContentView(R.layout.content_maps);
 
         btn_normal = (Button)findViewById(R.id.btn_normal);
         btn_satellite = (Button)findViewById(R.id.btn_satellite);
@@ -64,6 +65,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    /* -------------------- 1 -------------------- */
     //Checks permissions
     private void checkPermissions(){
         Log.i(TAG,"I'm in checkPermissions");
@@ -75,6 +77,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+
+    /* -------------------- 3 -------------------- */
     //initializes map
     private void initMap(){
         Log.i(TAG, "initMap: initializing map");
@@ -90,12 +94,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
 
-                myLocation = new LatLng(locationResult.getLastLocation().getLatitude(), locationResult.getLastLocation().getLongitude());
+                Location lastLocation = locationResult.getLastLocation();
+
+                myLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
                 showLocation();
             }
         };
     }
 
+
+    /* -------------------- 7 -------------------- */
     //shows location on the map
     private void showLocation(){
         Log.d(TAG,"Showing location:   lat = "+myLocation.latitude+"     long = "+myLocation.longitude);
@@ -111,15 +119,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+
+    /* -------------------- 4 -------------------- */
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -149,6 +150,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+
+        /* ----- but this is the last thing ----- */
         //detect long click
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
@@ -174,6 +177,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationUpdates();
     }
 
+
+    /* -------------------- 5 -------------------- */
     //gets updates on the location
     @SuppressLint("MissingPermission")
     private void locationUpdates(){
@@ -189,6 +194,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
+
+    /* -------------------- 2 --------------------- */
     //handles the permission request(s)
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -200,6 +207,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+
+    /* -------------------- 6 -------------------- */
     @Override
     protected void onDestroy() {
         Log.i(TAG,"I'm in onDestroy");

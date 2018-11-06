@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
 import com.google.android.gms.maps.StreetViewPanorama;
@@ -25,7 +24,7 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_map);
+        setContentView(R.layout.content_street);
 
         btn_ready = (Button) findViewById(R.id.btn_ready);
         btn_reset = (Button) findViewById(R.id.btn_reset);
@@ -37,6 +36,8 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
         init();
     }
 
+
+    /* -------------------- 2 --------------------- */
     private void init(){
         //4 places from different continents
         locals = new ArrayList<>();
@@ -78,6 +79,8 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
         });
     }
 
+
+    /* -------------------- 3 -------------------- */
     private void setLocation(){
         //chooses a random place from those 4
         Random rand = new Random();
@@ -85,6 +88,8 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
         local = locals.get(n);
     }
 
+
+    /* -------------------- 1 -------------------- */
     @Override
     public void onStreetViewPanoramaReady(StreetViewPanorama streetViewPanorama) {
         this.streetViewPanorama = streetViewPanorama;

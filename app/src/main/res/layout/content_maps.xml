@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <include
-        layout="@layout/activity_maps2"
+        layout="@layout/activity_maps"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
     </include>
