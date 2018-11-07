@@ -21,6 +21,9 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
     private Button btn_ready, btn_reset, btn_retry;
     private StreetViewPanorama streetViewPanorama;
 
+    /* coordinates for DEI
+    * lat = 40.186625, long = -8.415772*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
